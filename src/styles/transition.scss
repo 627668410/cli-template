@@ -1,0 +1,50 @@
+// global
+.fade-in-out-enter-active {
+  transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.fade-in-out-leave-active {
+  transition: all .3s ease;
+}
+.fade-in-out-enter, .fade-in-out-leave-to {
+  opacity: 0;
+}
+.fade-in-out-enter {
+  transform: translateY(-5px);
+  opacity: 0;
+}
+.fade-in-out-leave-to {
+  opacity: 0;
+}
+ 
+// App
+.slide-fade-enter-active {
+  transition: all .4s ease;
+}
+.slide-fade-leave-active {
+  transition: all .4s ease;
+}
+.slide-fade-enter {
+  transform: translate3d(0, 100%, 0);
+  opacity: 0;
+}
+.slide-fade-leave-to {
+  transform: translate3d(0, -100%, 0);
+  opacity: 0;
+}
+
+// layout
+.fade-transform-enter-active {
+  transition: all .2s;
+}
+.fade-transform-leave-active {
+  transition: all .2s;
+}
+
+.fade-transform-enter {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+.fade-transform-leave-to {
+  opacity: 0;
+  transform: translateX(10px);
+}

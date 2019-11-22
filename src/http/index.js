@@ -1,11 +1,11 @@
 import axios from 'axios'
 import Vue from 'vue'
+import to from 'await-to-js'
 import baseURL from './url'
-// const path = require('path')
 
 // axios实例化
 let http = axios.create({
-  baseURL:process.env.NODE_ENV === 'development'?baseURL :process.env.VUE
+  baseURL: process.env.NODE_ENV === 'development' ? baseURL : process.env.VUE_APP_BASE_URL,
   headers: {
     'Content-Type': 'application/json; charset=utf-8'
   },
@@ -16,16 +16,6 @@ let http = axios.create({
     return status < 500
   }
 })
-
-// 自动切换HTTP/HTTPS
-// development环境属于本机环境，本机环境用proxy做转发请求，勿设置http.defaults.baseURL，否则转发失效
-// if (process.env.NODE_ENV !== 'development') {
-//   if (window.location.protocol && window.location.protocol.startsWith('https:')) {
-//     http.defaults.baseURL = process.env.VUE_APP_HTTPS_BASE_URL
-//   } else {
-//     http.defaults.baseURL = process.env.VUE_APP_HTTP_BASE_URL
-//   }
-// }
 
 // 请求拦截器
 http.interceptors.request.use((config) => {
@@ -41,17 +31,6 @@ http.interceptors.request.use((config) => {
       message: 'request need url'
     })
   }
-  // else {
-  //   // 请求转发（参数中isMock=true时，被转发到mock API；参数中isMock=false或undefined时，被转发到后台API）
-  //   // 转发请看vue.config.js中的devServer.proxy
-  //   if (process.env.NODE_ENV === 'development') {
-  //     if ((reqConfig.params && reqConfig.params.isMock) || (reqConfig.data && reqConfig.data.isMock)) {
-  //       reqConfig.url = path.join('/mock', reqConfig.url)
-  //     } else {
-  //       reqConfig.url = path.join('/aiparking', reqConfig.url)
-  //     }
-  //   }
-  // }
 
   // 默认get请求
   if (!reqConfig.method) {
@@ -137,5 +116,5 @@ http.interceptors.response.use((response) => {
   }
   return Promise.reject(error)
 })
-
-export default http
+const request = (params) => to(http(params))
+export default request

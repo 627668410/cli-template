@@ -1,3 +1,4 @@
+### API风格统一使用同步的async/await的形式
 ### 版本管理
 ```
 可以设置package.json中的version,打出不同版本的包

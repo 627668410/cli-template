@@ -105,24 +105,4 @@ module.exports = {
       )
     }
   }
-  // 代理转接
-  // devServer: {
-  //   https: process.env.VUE_APP_IS_HTTPS === 'true',
-    // proxy: {
-    //   '/xxx': {
-    //     target: process.env.VUE_APP_IS_HTTPS === 'true' ? process.env.VUE_APP_HTTPS_BASE_URL : process.env.VUE_APP_HTTP_BASE_URL,
-    //     changeOrigin: true,
-    //     pathRewrite: {
-    //       '/xxx': '/'
-    //     }
-    //   },
-    //   '/mock': {
-    //     target: '',
-    //     changeOrigin: true,
-    //     pathRewrite: {
-    //       '/mock': '/'
-    //     }
-    //   }
-    // }
-  // }
 }

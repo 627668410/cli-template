@@ -4,7 +4,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const packageConfig = require('./package.json')
 const fs = require('fs')
 
-function resolve(dir) {
+function resolve (dir) {
   return path.join(__dirname, dir)
 }
 // 不同环境打包到不同文件夹下
@@ -26,26 +26,24 @@ module.exports = {
   outputDir: outputDirName,
   assetsDir: 'static',
   productionSourceMap: process.env.NODE_ENV !== 'production',
-  chainWebpack(config) {
+  chainWebpack (config) {
     // webpack dllplugin
-    if (process.env.NODE_ENV === 'development') {
-      const files = fs.readdirSync(path.resolve(__dirname, './dll'))
-      files.forEach((file, index) => {
-        if (/.*\.dll.js/.test(file)) {
-          config.plugin('AddAssetHtmlWebpackPlugin' + index).use(require('add-asset-html-webpack-plugin'), [{
-            filepath: path.resolve(__dirname, 'dll', file)
-          }])
-        }
-        if (/.*\.manifest.json/.test(file)) {
-          config.plugin('DllReferencePlugin' + index).use(require('webpack/lib/DllReferencePlugin'), [{
-            context: __dirname,
-            manifest: path.resolve(__dirname, 'dll', file)
-          }])
-        }
-      })
-    }
+    const files = fs.readdirSync(path.resolve(__dirname, './dll'))
+    files.forEach((file, index) => {
+      if (/.*\.dll.js/.test(file)) {
+        config.plugin('AddAssetHtmlWebpackPlugin' + index).use(require('add-asset-html-webpack-plugin'), [{
+          filepath: path.resolve(__dirname, 'dll', file)
+        }])
+      }
+      if (/.*\.manifest.json/.test(file)) {
+        config.plugin('DllReferencePlugin' + index).use(require('webpack/lib/DllReferencePlugin'), [{
+          context: __dirname,
+          manifest: path.resolve(__dirname, 'dll', file)
+        }])
+      }
+    })
     // js统一打包到js文件夹下
-    config.output.filename('static/js/[name].js')
+    config.output.filename('static/js/[name].[contenthash].js')
     // 删除预加载
     if (process.env.NODE_ENV !== 'development') {
       config.plugins.delete('preload') // TODO: need test
